@@ -3,7 +3,7 @@ name: Build OpenCV with MinGW on Windows
 on:
   push:
     branches:
-      - main  # 或你正在开发的分支
+      - 4.x  # 或你正在开发的分支
 
 jobs:
   build:
