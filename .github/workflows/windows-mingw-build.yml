@@ -1,0 +1,44 @@
+name: Build OpenCV with MinGW on Windows
+
+on:
+  push:
+    branches:
+      - main  # 或你正在开发的分支
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        choco install mingw cmake ninja -y
+
+    - name: Configure CMake
+      run: |
+        mkdir build
+        cd build
+        cmake .. -G "MinGW Makefiles" ^
+          -DCMAKE_BUILD_TYPE=Release ^
+          -DCMAKE_C_COMPILER=C:/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin/gcc.exe ^
+          -DCMAKE_CXX_COMPILER=C:/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin/g++.exe ^
+          -DBUILD_TESTS=OFF ^
+          -DBUILD_PERF_TESTS=OFF ^
+          -DBUILD_EXAMPLES=OFF ^
+          -DBUILD_opencv_gapi=OFF
+
+    - name: Build
+      run: |
+        cd build
+        mingw32-make -j4
+
+    - name: Archive binaries
+      uses: actions/upload-artifact@v4
+      with:
+        name: opencv-mingw-bin
+        path: |
+          build/bin/
+          build/lib/
