@@ -17,9 +17,6 @@ jobs:
       run: |
         choco install mingw cmake ninja -y
 
-    - name: echo
-      run: where g++
-
     - name: Configure CMake
       run: |
         mkdir build
@@ -30,6 +27,11 @@ jobs:
       run: |
         cd build
         mingw32-make -j4
+    
+    - name: Collect GNU Libraries
+      run: |
+        ls C:\ProgramData\mingw64\mingw64\bin
+        Copy-Item C:\ProgramData\mingw64\mingw64\bin\*.lib -Destination ./build/bin -Force
 
     - name: Archive binaries
       uses: actions/upload-artifact@v4
