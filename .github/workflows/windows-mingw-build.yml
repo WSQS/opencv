@@ -34,9 +34,7 @@ jobs:
         cmake --install . --prefix ../install
     
     - name: Collect GNU Libraries
-      run: |
-        ls C:\ProgramData\mingw64\mingw64\bin
-        Copy-Item C:\ProgramData\mingw64\mingw64\bin\*.lib -Destination ./install/lib -Force
+      run: Copy-Item C:\ProgramData\mingw64\mingw64\bin\*.lib -Destination ./install/lib -Force
 
     - name: Archive binaries
       uses: actions/upload-artifact@v4
