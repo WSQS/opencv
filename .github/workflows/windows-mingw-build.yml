@@ -12,13 +12,13 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
-    
-    - name: echo
-      run: where g++
 
     - name: Install dependencies
       run: |
         choco install mingw cmake ninja -y
+
+    - name: echo
+      run: where g++
 
     - name: Configure CMake
       run: |
